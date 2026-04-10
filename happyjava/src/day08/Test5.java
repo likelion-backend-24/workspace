@@ -1,19 +1,27 @@
-package day07;
- class Animal {
-    public void makeSound() {
-        System.out.println("동물이 소리를 냅니다.");
-    }
+package day08;
 
-    public void move() {
-        System.out.println("동물이 움직입니다.");
-    }
+abstract class Animal {
+    abstract public void makeSound();
+
+    abstract public void move() ;
+
+    //추상 클래스에는 일반적인 필드 메서드 모두 포함 할 수 있어요.
 }
 class Pig extends Animal{
-     //animal이 가진 makeSound()나 Move를 반드시 다시 구현해야할까요?
+
+    @Override
+    public void makeSound() {
+
+    }
+
+    @Override
+    public void move() {
+
+    }
 }
 
- class Dog extends Animal {
-     @Override
+class Dog extends Animal {
+    @Override
     public void makeSound() {
         System.out.println("멍멍!");
     }
@@ -29,7 +37,7 @@ class Pig extends Animal{
     }
 }
 
- class Cat extends Animal {
+class Cat extends Animal {
     @Override
     public void makeSound() {
         System.out.println("야옹~");
@@ -49,7 +57,7 @@ public class Test5 {
         Dog dog = new Dog();
         dog.makeSound();
 
-        Animal animal = null;
+       Animal animal = null;
         if(args[0].equals("a"))
             animal = new Cat();
         else
@@ -57,24 +65,20 @@ public class Test5 {
 
         animal.makeSound();
 
-        Animal animal1 = new Animal();
-        if(animal1 instanceof Cat) {
-            Cat cat = (Cat) animal1;
+//        추상클래스를 인스턴스화 하는것은 불가능!!
+//        Animal animal1 = new Animal();
+
+        Animal animal1 = null;
+
+        Animal[] animals = new Animal[3];
+        animals[0] = new Dog();
+        animals[1] = new Cat();
+        animals[2] = new Dog();
+
+        for(Animal animal2 : animals){
+            animal2.makeSound();
         }
 
-        if(animal1 instanceof Animal) {
-            System.out.println(" Animal true");
-        }
 
-        if(animal1 instanceof Object) {
-            System.out.println(" Object true");
-        }
-
-        if(animal1 instanceof Dog) {
-            System.out.println(" Dog true");
-        }
-
-        Pig pig = new Pig();
-        pig.makeSound();
     }
 }

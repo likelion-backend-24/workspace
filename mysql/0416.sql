@@ -33,7 +33,9 @@ select ename, sal * 18 "연 봉" from emp;
 select * from emp 
 where sal > 2000;
 select * from emp where job='MANAGER';
-
+desc employees;
 select * from emp where job='MANAGER' order by sal desc;
 show tables;
+SELECT CONCAT(employee_id,'사원의 이름은 ',first_name, ' ', last_name,' 입니다.') AS full_name
+FROM employees;
 

@@ -211,3 +211,5 @@ FROM emp;
 
 select * from emp 
 where empno = 8000;
+
+SHOW INDEX FROM employees;

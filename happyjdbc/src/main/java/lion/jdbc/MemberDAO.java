@@ -12,14 +12,15 @@ import java.util.List;
 //DTO   -- VO(Value Object)
 public class MemberDAO {
     public boolean insertMember(MemberDTO memberDTO){
-        String url = "jdbc:mysql://localhost:3306/liondb";
-        String user = "lion";
-        String password = "lion1234";
+//        String url = "jdbc:mysql://localhost:3306/liondb";
+//        String user = "lion";
+//        String password = "lion1234";
 
         String sql = "insert into member(name,email, password) values(?,?,?)";
 
         boolean result = false;
-        try(Connection conn = DriverManager.getConnection(url,user,password);
+        try(/*Connection conn = DriverManager.getConnection(url,user,password);*/
+            Connection conn = DBUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
         ){
             ps.setString(1,memberDTO.getName());

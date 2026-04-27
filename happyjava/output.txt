@@ -1,0 +1,42 @@
+1: package ioexam;
+2: 
+3: import java.io.*;
+4: import java.net.URL;
+5: 
+6: public class IOExam {
+7:     public static void main(String[] args) throws IOException {
+8:         //무엇을 하고 싶은지??
+9:         //키보드로부터 한 줄 씩 입력 받고 싶다.
+10:         //키보드 - System.in  - InputStream
+11:         //한줄씩!! -- BufferedRearder (Reader)
+12:         URL url = new URL("https://docs.oracle.com/javase/8/docs/api/java/lang/System.html");
+13: 
+14: //        InputStream in = System.in;
+15: //        InputStream in = new FileInputStream("src/ioexam/IOExam.java");
+16:         InputStream in = url.openStream();
+17:         InputStreamReader isr = new InputStreamReader(in);
+18:         BufferedReader br = new BufferedReader(isr);
+19: 
+20: 
+21: //        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+22: 
+23: 
+24:         String msg = null;
+25: 
+26:         System.out.println("입력하세요::");
+27:         msg = br.readLine();
+28: 
+29:         System.out.println(msg);
+30: 
+31: //        한번만 입력받는것이 아니라 여러번 입력 받고 싶다면???
+32: 
+33:         while ((msg = br.readLine()) != null){
+34:             System.out.println(msg);
+35:         }
+36: 
+37: 
+38:         br.close();
+39:         isr.close();
+40:         in.close();
+41:     }
+42: }

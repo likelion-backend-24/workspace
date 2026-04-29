@@ -15,15 +15,23 @@ class IsEven implements Predicate<Integer>{
     }
 }
 public class StandardFunctionalInterfaces {
-    public static void test(Predicate<Integer> i){
 
-    }
 
     public static void test2(새 b){
 
     }
 
+    public static void test(Predicate<Integer> i){
+
+    }
+
     public static void main(String[] args) {
+
+        test(num->num%2==0);
+
+
+
+
 
         test2(new 새(){
 
@@ -31,7 +39,6 @@ public class StandardFunctionalInterfaces {
 
 
 
-        test(num->num%2==0);
 
         test(new Predicate<Integer>() {
             @Override

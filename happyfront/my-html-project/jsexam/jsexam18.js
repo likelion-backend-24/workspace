@@ -29,6 +29,6 @@ function work() {
 
 console.log("start!!");
 work(); // 이 함수가 다 실행되고 나면 해야할 일이 있다.
-console.log("work()가 끝나면 해야할일!!!");
-
+console.log("work()가 끝나면 해야할일!!!"); //work()보다 먼저 실행되요..
+// 콜백함수!!!
 console.log("end!!");

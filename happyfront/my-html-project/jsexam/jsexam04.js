@@ -18,5 +18,3 @@ let notDefined;
 console.log(notDefined); // undefined
 
 console.log(1 === "1");
-
-prompt("input");

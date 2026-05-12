@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>event exam</title>
+  </head>
+  <body>
+    <form action="06.html" id="joinForm">
+      이름 : <input type="text" name="name" /> <br />
+      비밀번호 : <input type="password" name="password" /><br />
+      비밀번호 확인 : <input type="password" name="checkPassword" /><br />
+      <input type="submit" value="등록" />
+    </form>
+
+    <p name="test" value="">test</p>
+    <script>
+      // e.preventDefault();  기존에 등록된 이벤트 무력화!!
+
+      // form에 submit 버튼이 눌리면 이름, 비밀번호, 비밀번호 확인이 모두 잘 입력되었는지,
+      //  비밀번호와 비밀번호 확인의 값은 일치하는지를 체크해서 모두 잘 입력 되었으면, action으로 이동
+      // 잘못 입력 되었다면 --  요소.focus()  -- 커서가 해당 요소로 이동
+      // 알맞게 처리 되도록 코드를 완성해 보세요. --
+      const join = document.getElementById("joinForm");
+      join.addEventListener("submit", (e) => {
+        const [id, pw, chpw] = document.querySelectorAll("input");
+
+        if (id.value === "") {
+          alert("아이디는 반드시 입력 해야합니다.");
+          id.focus();
+        } else {
+          alert("회원가입성공!!");
+          return;
+        }
+
+        e.preventDefault();
+        return;
+      });
+    </script>
+  </body>
+</html>

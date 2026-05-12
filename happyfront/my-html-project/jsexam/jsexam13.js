@@ -22,6 +22,19 @@ const person = {
     return a + b;
   },
 };
+
+const { name, age, address } = person;
+
+function test({ name }) {
+  console.log(name);
+}
+
+test(person);
+
+const arr = [1, 2, 3];
+
+const [a, b, c] = arr;
+
 for (let key in person) {
   console.log(`${key}: ${person[key]}`);
 }

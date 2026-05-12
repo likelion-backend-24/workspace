@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>event 2</title>
+  </head>
+  <body>
+    <button id="btn">클릭</button>
+
+    <script>
+      // event!!
+      //소스(대상(html tag)) - 이벤트리스너
+      // 소스.addEventListener('이벤트이름', '이벤트 핸들러(함수 - 이벤트가 발생했을 때 할일!!)',[캡쳐링여부])
+
+      //1. 어떤 대상한테 이벤트 걸어줄지!!
+      const btn = document.getElementById("btn");
+      //2. 귀를 달아주면되겠죠?
+      btn.addEventListener("mouseover", hi);
+
+      function hi() {
+        // alert("hello");
+        console.log("hello");
+      }
+
+      btn.addEventListener("click", () => console.log("hi"));
+    </script>
+  </body>
+</html>

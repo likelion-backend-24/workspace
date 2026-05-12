@@ -6,7 +6,12 @@ if (newName) {
 }
 // 위의 if 문과 동일함.
 newName && (oldName = newName);
-// 이것도 같은 코드
+// 이것은 다른코드  newName true라면 newName = oldName     ==  kang 이 출력되겠어요.
+// if (newName) {
+//   newName = oldName;
+// }
+// 위 if문과 같은 코드겠어요~~
+
 newName &&= oldName;
 
 const person = { name: "", age: 0 };

@@ -5,6 +5,10 @@ import org.example.iocexam.domain.User;
 
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao){
+        this.userDao = userDao;
+    }
     @Override
     public void joinUser(User user) {
         //회원가입을 위한 비지니스로직 실행!!

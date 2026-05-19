@@ -12,12 +12,12 @@ import org.springframework.context.annotation.Configuration;
 import sample.bean.Dice;
 
 @Configuration
-//@ComponentScan(basePackages = {/*"org.example.iocexam",*/"sample.bean"})
+@ComponentScan(basePackages = {/*"org.example.iocexam",*/"sample"})
 public class UserConfig {
-    @Bean
-    public Dice dice() {
-        return new Dice(6);
-    }
+//    @Bean
+//    public Dice dice() {
+//        return new Dice(6);
+//    }
 //    여기에 빈을 등록해주세요.
 //    @Bean
 //    public UserDao userDao(){

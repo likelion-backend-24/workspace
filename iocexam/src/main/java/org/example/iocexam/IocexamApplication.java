@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import sample.bean.Dice;
+import sample.bean.Game;
 
 @SpringBootApplication
 public class IocexamApplication implements CommandLineRunner {
@@ -14,14 +15,19 @@ public class IocexamApplication implements CommandLineRunner {
         SpringApplication.run(IocexamApplication.class, args);
     }
 
+//    @Autowired
+//    private UserController userController;
+//    @Autowired
+//    private Dice dice;
+
     @Autowired
-    private UserController userController;
-    @Autowired
-    private Dice dice;
+    private Game game;
     @Override
     public void run(String... args) throws Exception {
-        userController.joinUser();
+//        userController.joinUser();
+//
+//        System.out.println(dice.getNumber());
 
-        System.out.println(dice.getNumber());
+        game.play();
     }
 }

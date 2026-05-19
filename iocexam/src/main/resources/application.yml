@@ -1,3 +1,6 @@
 spring:
   application:
-    nameiocexam
+    name: iocexam
+
+  profiles:
+    active: prod

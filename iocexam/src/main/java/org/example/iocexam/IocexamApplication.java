@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import sample.bean.Dice;
 
 @SpringBootApplication
 public class IocexamApplication implements CommandLineRunner {
@@ -15,8 +16,12 @@ public class IocexamApplication implements CommandLineRunner {
 
     @Autowired
     private UserController userController;
+    @Autowired
+    private Dice dice;
     @Override
     public void run(String... args) throws Exception {
         userController.joinUser();
+
+        System.out.println(dice.getNumber());
     }
 }

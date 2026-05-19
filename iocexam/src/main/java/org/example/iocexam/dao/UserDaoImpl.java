@@ -2,10 +2,12 @@ package org.example.iocexam.dao;
 
 import org.example.iocexam.domain.User;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+//@Component
+@Repository("userDaoImpl")
 public class UserDaoImpl implements UserDao {
     @Override
     public User getUser(String email) {

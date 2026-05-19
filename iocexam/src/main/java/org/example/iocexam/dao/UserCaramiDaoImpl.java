@@ -4,7 +4,7 @@ import org.example.iocexam.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-@Component
+@Component("caramiDao")
 public class UserCaramiDaoImpl implements UserDao{
     @Override
     public User getUser(String email) {

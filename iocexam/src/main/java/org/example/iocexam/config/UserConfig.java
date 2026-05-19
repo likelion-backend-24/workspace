@@ -7,8 +7,17 @@ import org.example.iocexam.dao.UserDaoImpl;
 import org.example.iocexam.service.UserService;
 import org.example.iocexam.service.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import sample.bean.Dice;
 
+@Configuration
+//@ComponentScan(basePackages = {/*"org.example.iocexam",*/"sample.bean"})
 public class UserConfig {
+    @Bean
+    public Dice dice() {
+        return new Dice(6);
+    }
 //    여기에 빈을 등록해주세요.
 //    @Bean
 //    public UserDao userDao(){

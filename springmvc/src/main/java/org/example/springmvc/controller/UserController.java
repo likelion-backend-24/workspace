@@ -36,6 +36,7 @@ public class UserController {
             return "user/user_join_form";
         }
 
+
 //        회원가입로직 실행!!!
 //        이름, 이메일, 패스워드 값을 얻어와서 log로 출력해보세요.
 

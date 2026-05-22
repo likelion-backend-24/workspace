@@ -51,17 +51,41 @@ public class CookieController {
         return "cookie_view";
     }
 
+    @GetMapping("/cookieDel")
+    public String cookieDel(HttpServletResponse response){
+        Cookie cookie = new Cookie("1111","");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+
+        response.addCookie(cookie);
+
+        return "redirect:/cookieView";
+    }
+
+//   1. 로그인 폼 보여주세요.
+
+
+
+
+// 2. 로그인해주세요.
     @GetMapping("/login")
     public String login(@RequestParam String id, @RequestParam String passwd){
         //서비스단에 보내서 로그인 여부를 체크하겠죠??
 //        서비스 쪽에서 true, false 를 리턴하든 알려주겠죠?
-        if(true){
-            Cookie cookie = new Cookie("loginOK",id);
-
-        }else{
-
-        }
+//        아이디와 패스워드가 정해진 값과 일치하다면 로그인 처리!!! (쿠키생성)
+//        아이디 패스워드가 일치하지 않다면 로그인 폼으로 리다이렉트!!
 
         return "";
     }
+
+//    3. UserList 를 요청해요.  -  로그인한 사용자라면 UserList를 보여주고,
+//    그렇치 않은 사용자라면 로그인 폼 화면으로 리다이렉트
+
+
+//    4. 로그아웃 요청이 들어오면 쿠키를 삭제하는 로직을 구현해주세요.
+//    logout이 완료되면 loginform 으로 리다이렉트 되도록.
+
+
+//    html 은 1. 로그인폼  2. userList 화면  
+
 }

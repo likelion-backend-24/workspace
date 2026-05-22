@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -63,29 +64,44 @@ public class CookieController {
     }
 
 //   1. 로그인 폼 보여주세요.
-
-
-
-
-// 2. 로그인해주세요.
     @GetMapping("/login")
+    public String loginForm(){
+        return "login_form";
+    }
+// 2. 로그인해주세요.
+    @PostMapping("/login")
     public String login(@RequestParam String id, @RequestParam String passwd){
         //서비스단에 보내서 로그인 여부를 체크하겠죠??
 //        서비스 쪽에서 true, false 를 리턴하든 알려주겠죠?
 //        아이디와 패스워드가 정해진 값과 일치하다면 로그인 처리!!! (쿠키생성)
 //        아이디 패스워드가 일치하지 않다면 로그인 폼으로 리다이렉트!!
+        if("carami".equals(id)&&"1234".equals(passwd)){
 
-        return "";
+            return "redirect:/userList";
+        }else {
+
+            return "redirect:/login";
+        }
     }
-
 //    3. UserList 를 요청해요.  -  로그인한 사용자라면 UserList를 보여주고,
 //    그렇치 않은 사용자라면 로그인 폼 화면으로 리다이렉트
+    @GetMapping("/userList")
+    public String userList(){
+
+        return "user_list";
+    }
 
 
 //    4. 로그아웃 요청이 들어오면 쿠키를 삭제하는 로직을 구현해주세요.
 //    logout이 완료되면 loginform 으로 리다이렉트 되도록.
+    @GetMapping("/logout")
+    public String logout(){
 
 
-//    html 은 1. 로그인폼  2. userList 화면  
+        return "redirect:/login";
+    }
+
+
+//    html 은 1. 로그인폼  2. userList 화면
 
 }

@@ -2,22 +2,32 @@ package org.example.springmvc.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.example.springmvc.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@SessionAttributes("visitCount")
+@SessionAttributes({"visitCount","cart","loginUser"})
 public class SessionController {
     @ModelAttribute("visitCount")    //위에서 선언한 SessionAttribute를 초기화 하는 부분!!
     public int getVisitCount() {
         return 0;
     }
 
+    @ModelAttribute("cart")
+    public ArrayList getCart() {
+        return new ArrayList<>();
+    }
+    @ModelAttribute("loginUser")
+    public User getLoginUser() {
+        return new User();
+    }
     @GetMapping("/visit")
     public String visitPage(@ModelAttribute(name="visitCount")int visitCount, Model model) {
         visitCount++;

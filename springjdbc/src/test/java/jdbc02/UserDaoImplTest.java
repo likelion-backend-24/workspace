@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -70,13 +71,34 @@ class UserDaoImplTest {
     @Test
     void findUserById() {
         log.info("findUserById test 실행");
+        User user = userDao.findUserById(10);
+        assertThat(user).isNotNull();
+        assertThat(user.getName()).isEqualTo("carami");
     }
 
     @Test
     void updateUser() {
+        User user = new User();
+        user.setId(1L);
+        user.setName("carami2");
+        user.setEmail("carami2@gmail.com");
+
+        userDao.updateUser(user);
+        User updateUser = userDao.findUserById(1);
+
+        assertThat(updateUser.getName()).isEqualTo("carami2");
+        assertThat(updateUser.getEmail()).isEqualTo("carami2@gmail.com");
     }
 
     @Test
     void deleteUser() {
+        userDao.deleteUser(1);
+//        User updateUser = userDao.findUserById(1);
+//        assertThat(updateUser).isNull();
+
+//        assertThat(userDao.findUserById(1)).isNull();
+
+        assertThatThrownBy(() -> userDao.findUserById(1)).isInstanceOf(EmptyResultDataAccessException.class);
+
     }
 }

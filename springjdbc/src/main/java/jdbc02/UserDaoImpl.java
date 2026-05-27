@@ -2,6 +2,8 @@ package jdbc02;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,7 +23,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int insertUser(User user) {
         String sql = "insert into users(name,email) values(?,?)";
-       return jdbcTemplate.update(sql, user.getName(), user.getEmail());
+        try {
+            return jdbcTemplate.update(sql, user.getName(), user.getEmail());
+        }catch (DataAccessException e) {
+            throw new DataAccessResourceFailureException("사용자가 잘못된 값을 입력했어요. 사용자이름 :"+ user.getName(),e);
+        }
     }
 
     @Override
@@ -53,13 +59,19 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void updateUser(User user) {
         String sql = "update users set name=?,email=? where id=?";
-        jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getId());
+        int updateCount = jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getId());
+        if(updateCount == 0){
+            throw new UserNotFoundException(user.getName()+" user를 찾을수 없어요.");
+        }
     }
 
     @Override
     public void deleteUser(int id) {
         String sql = "delete from users where id=?";
-        jdbcTemplate.update(sql, id);
+        int deleteCount = jdbcTemplate.update(sql, id);
+        if(deleteCount == 0){
+            throw new UserNotFoundException(id+" user를 찾을수 없어요.");
+        }
 
     }
 }

@@ -1,14 +1,18 @@
 package org.example.friendapp.controller;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.friendapp.domain.Friend;
+import org.example.friendapp.service.FriendService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+@Slf4j
 @Controller
 @RequestMapping("/friend")
+@RequiredArgsConstructor
 public class FriendController {
+    private final FriendService friendService;
 //    친구등록 - 폼    /friend/add    -- GET
     @GetMapping("/add")
     public String addForm(){
@@ -16,14 +20,22 @@ public class FriendController {
     }
 //    친구등록          /friend/add    -- POST
     @PostMapping("/add")
-    public String add(){
+    public String add(@ModelAttribute Friend friend){
+
+//        이 값을 이용해서 서비스쪽에 친구 저장해줘요..
+        Friend savedFriend = friendService.saveFriend(friend);
+
+        log.info("{} Friend saved successfully",savedFriend.getName());
 
         return "redirect:/friend/list";
     }
 
 //        친구목록보기   /friend/list    -- GET
     @GetMapping("/list")
-    public String list(){
+    public String list(Model model){
+        Iterable<Friend> friends = friendService.getFriends();
+
+        model.addAttribute("friends", friends);
 
         return "friend/list";
     }

@@ -4,6 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.friendapp.domain.Friend;
 import org.example.friendapp.service.FriendService;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +37,10 @@ public class FriendController {
 
 //        친구목록보기   /friend/list    -- GET
     @GetMapping("/list")
-    public String list(Model model){
-        Iterable<Friend> friends = friendService.getFriends();
+    public String list(Model model, @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+//        Iterable<Friend> friends = friendService.getFriends();
+        Page<Friend> friends = friendService.getFriends(pageable);
+
 
         model.addAttribute("friends", friends);
 
@@ -42,26 +49,31 @@ public class FriendController {
 
 //    친구정보보기  /friend/친구id    -- GET
     @GetMapping("/{id}")
-    public String view(@PathVariable("id") int id){
+    public String view(@PathVariable("id") Long id){
         return "friend/view";
     }
 //친구정보수정 - 폼   /friend/update/친구id   -- GET
     @GetMapping("/update/{id}")
-    public String update(@PathVariable("id") int id){
+    public String update(@PathVariable("id") Long id, Model model){
+//        id에 해당하는 정보를 얻어서,  폼에 보여줘야 할거예요.
+        Friend friend = friendService.getFriend(id);
+
+        model.addAttribute("friend",friend);
 
         return "friend/updateForm";
     }
 
 //    친구정보수정         /friend/update   -- Post
     @PostMapping("/update")
-    public String update(){
+    public String update(@ModelAttribute Friend friend){
 
+        friendService.updateFriend(friend);
         return "redirect:/friend/list";
     }
 //    친구삭제   /friend/delete  -- GET
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id){
-
+    public String delete(@PathVariable("id") Long id){
+        friendService.deleteFriend(id);
         return "redirect:/friend/list";
     }
 

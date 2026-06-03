@@ -2,11 +2,11 @@ spring:
   application:
     name: iocexam
 
-  profiles:
-    active: prod
+#  profiles:
+#    active: prod
 
-logging:
-  level:
-    root: info
-    org.springframework: info
-    org.example: debug
+#logging:
+#  level:
+#    root: info
+#    org.springframework: info
+#    org.example: debug

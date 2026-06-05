@@ -32,6 +32,11 @@ public class JpaRun {
 //        entityManager.persist(user3);
 //        System.out.println("persist 실행후!!");
 
+        User user1 = new User("Alice", "alice@example.com");  // id = null
+        User user2 = new User("Alice", "alice@example.com");
+
+
+
 
 
 

@@ -26,7 +26,22 @@ class CustomerServiceTest {
     @Test
     @DisplayName("고객조회")
     void findCustomer(){
+        Customer saved = service.createCustomer("김철수", "kim@test.com", 30);
 
+        Customer found = service.findCustomer(saved.getId());
+
+        assertThat(found).isNotNull();
+        assertThat(found.getName()).isEqualTo("김철수");
+        assertThat(found.getEmail()).isEqualTo("kim@test.com");
+
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 이메일 조회 시 예외 발생")
+    void findByEmailNotFound() {
+        assertThatThrownBy(() -> service.findByEmail("notfound@test.com"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 이메일의 고객이 없습니다");
     }
 
 }

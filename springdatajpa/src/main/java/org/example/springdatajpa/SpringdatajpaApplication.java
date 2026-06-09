@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -17,18 +18,36 @@ public class SpringdatajpaApplication {
     @Bean
     public CommandLineRunner run(UserRepository repository, UserService service){
         return args -> {
-            service.addUser(new User("kang","kang@lion.com"));
+
+            repository.findByNameNative("carami").forEach(System.out::println);
+
+            repository.findByEmailNative("carami2@gmail.com").forEach(System.out::println);
 
 
-//            User user = new User("carami","carami@gmailc.com");
-//            repository.save(user);
+//            List<User> users = repository.findByName("kang");
 //
+//            for(User user:users){
+//                System.out.println(user.getName());
+//            }
+
+
+//            service.addUser(new User("kang","kang@lion.com"));
+
+//추가
+//            User user = new User("carami3","carami3@gmail.com");
+//            repository.save(user);
+////
 //            Optional<User> user1 = repository.findById(11L);
 //
-//
+//조회
 //            User user2 = repository.findById(1L).get();
 //            repository.delete(user2);
 //
+//수정
+//            User user = repository.findById(1L).get();
+//            user.setName("newName");
+//
+//            repository.save(user);
 
 
 

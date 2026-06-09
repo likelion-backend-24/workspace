@@ -3,9 +3,9 @@ spring:
     name: springdatajpa
 
   datasource:
-    url: jdbc:mysql://localhost:3306/jpadb
-    username: mutsa
-    password: mutsapw
+    url: jdbc:mysql://localhost:3306/liondb
+    username: root
+    password: root1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 

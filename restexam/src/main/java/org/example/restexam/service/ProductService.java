@@ -7,6 +7,9 @@ import org.example.restexam.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -28,5 +31,45 @@ public class ProductService {
         return ProductDTO.fromEntity(saveProduct);
     }
 
+//상품조회 (전체)
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getProducts(){
+        return repository.findAll().stream().map(ProductDTO::fromEntity).toList();
+    }
 
+//상품조회 (한건)
+    @Transactional(readOnly = true)
+    public ProductDTO getProduct(Long id){
+        Product product = repository.findById(id).orElseThrow(() -> new RuntimeException("상품이 존재하지 않아요.  id:: " + id));
+        return ProductDTO.fromEntity(product);
+    }
+
+//    상품정보 수정
+    @Transactional
+    public ProductDTO updateProduct(ProductDTO productDTO){
+        Product product = repository.findById(productDTO.getId())
+                .orElseThrow(() -> new RuntimeException("수정할 상품이 존재하지 않습니다. "));
+
+//        수정은 어떻게 처리하셨나요??? (처리하신 분들 채팅창에~~ )
+        if(productDTO.getName() != null)
+            product.setName(productDTO.getName());
+
+//위에서사용한 if 문을 이렇게 사용할 수 있다!!
+        Optional.ofNullable(productDTO.getName()).ifPresent(product::setName);
+
+//        Optional.ofNullable(productDTO.getPrice()).ifPresent(product::setPrice);
+
+        if(productDTO.getPrice() != 0)   //int vs Integer  - 차이점!!!
+            product.setPrice(productDTO.getPrice());
+
+        return ProductDTO.fromEntity(product);
+    }
+//    상품정보 삭제
+    @Transactional
+    public void deleteProduct(Long id){
+        if(!repository.existsById(id)){
+            throw new RuntimeException("삭제할 상품이  존재하지 않습니다. id:: "+id);
+        }
+        repository.deleteById(id);
+    }
 }

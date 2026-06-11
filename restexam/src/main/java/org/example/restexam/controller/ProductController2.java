@@ -1,5 +1,6 @@
 package org.example.restexam.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.restexam.dto.ProductDTO;
 import org.example.restexam.service.ProductService;
@@ -26,31 +27,37 @@ public class ProductController2 {
         return ResponseEntity.ok(products);
     }
     @GetMapping
-    public List<ProductDTO> getProducts(){
-        List<ProductDTO> products = Arrays.asList(
-                new ProductDTO(1L, "Laptop", 999),
-                new ProductDTO(2L, "Mouse", 29)
-        );
+    public ResponseEntity<List<ProductDTO>> getProducts(@RequestHeader("Accept") String accptHeader){
+        System.out.println(accptHeader);
 
-        return products;
+
+        return ResponseEntity.ok(service.getProducts());
     }
 
-    @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable("id") Long id){
 
+        return ResponseEntity.ok(service.getProduct(id));
+    }
+    @PostMapping
+    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO){
+
+//        if(productDTO.getName()!=null)
+//            R
         ProductDTO product = service.createProduct(productDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO){
-
-        return productDTO;
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable("id")Long id,@RequestBody ProductDTO productDTO){
+        productDTO.setId(id);
+        return ResponseEntity.ok(service.updateProduct(productDTO));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteProduct(){
-        return "삭제성공!!";
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
+        service.deleteProduct(id);
+        return ResponseEntity.ok("삭제성공!!");
     }
 
 }

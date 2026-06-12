@@ -20,11 +20,11 @@ public class FilterExam implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("FilterExam doFilter() 실행전!!");
+        System.out.println("FilterExam doFilter() 실행전!!" + Thread.currentThread().getName());
 
         chain.doFilter(request,response);
 
-        System.out.println("FilterExam doFilter() 실행후!!");
+        System.out.println("FilterExam doFilter() 실행후!!" + Thread.currentThread().getName());
     }
 
     @Override

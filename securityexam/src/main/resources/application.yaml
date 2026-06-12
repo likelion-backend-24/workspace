@@ -14,3 +14,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+server:
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 5
+

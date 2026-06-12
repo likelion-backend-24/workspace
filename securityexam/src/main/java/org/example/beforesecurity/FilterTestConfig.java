@@ -24,4 +24,13 @@ public class FilterTestConfig {
         registrationBean.setOrder(2);
         return registrationBean;
     }
+
+    @Bean
+    public FilterRegistrationBean<UserFilter> userFilter(){
+        FilterRegistrationBean<UserFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new UserFilter());
+        registrationBean.addUrlPatterns("/users/*");
+        registrationBean.setOrder(3);
+        return registrationBean;
+    }
 }

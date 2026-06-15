@@ -9,4 +9,9 @@ public class UserController {
     public String loginForm(){
         return "loginForm";
     }
+
+    @GetMapping("/test")
+    public String test(){
+        return "test";
+    }
 }

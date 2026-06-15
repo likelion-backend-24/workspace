@@ -19,4 +19,8 @@ public class HomeController {
     public String hello(){
         return "hello";
     }
+    @GetMapping("/fail")
+    public String fail(){
+        return "fail ㅠㅠ";
+    }
 }

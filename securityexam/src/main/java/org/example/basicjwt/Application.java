@@ -27,7 +27,23 @@ public class Application {
             );
 
             log.info("accessToken :: "+ accessToken);
+
+            String refreshToken = jwtTokenizer.createRefreshToken(
+                    1L,
+                    "carami@gmail.com",
+                    "강경미",
+                    "carami",
+                    Arrays.asList("ROLE_ADMIN", "ROLE_USER")
+            );
+
+            log.info("refreshToken::"+refreshToken);
+
+
+
+
         };
+
+
 
     }
 }

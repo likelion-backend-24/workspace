@@ -1,0 +1,11 @@
+### 로그인
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "username": "kang",
+  "password": "1111"
+}
+
+### welcome
+GET http://localhost:8080/api/welcome

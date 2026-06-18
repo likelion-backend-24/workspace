@@ -1,4 +1,4 @@
-package org.example.basicjwt;
+package jwtexam.jwt.token;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Component
 public class JwtTokenizer {
@@ -118,6 +115,14 @@ public class JwtTokenizer {
         }
 
         return token;
+    }
+
+    public Long getAccessTokenExpireCount(){
+        return accessExpirationMs;
+    }
+
+    public Long getRefreshTokenExpireCount(){
+        return refreshExpirationMs;
     }
 
 }

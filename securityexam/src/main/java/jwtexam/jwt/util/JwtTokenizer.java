@@ -1,4 +1,4 @@
-package jwtexam.jwt.token;
+package jwtexam.jwt.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -54,8 +54,8 @@ public class JwtTokenizer {
         Date expiration = new Date(now.getTime()+ expire);
 
         return Jwts.builder()
-                .subject(email) //로그인아이디.
-                .claim("username",username)
+                .subject(username) //로그인아이디.
+                .claim("email",email)
                 .claim("name",name)
                 .claim("userId", id)
                 .claim("roles",roles)

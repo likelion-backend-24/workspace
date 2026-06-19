@@ -7,7 +7,7 @@ import jwtexam.domain.RefreshToken;
 import jwtexam.domain.Role;
 import jwtexam.domain.User;
 import jwtexam.dto.UserLoginResponeDto;
-import jwtexam.jwt.token.JwtTokenizer;
+import jwtexam.jwt.util.JwtTokenizer;
 import jwtexam.security.dto.UserLoginDto;
 import jwtexam.service.RefreshTokenService;
 import jwtexam.service.UserService;

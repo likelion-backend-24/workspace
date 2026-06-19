@@ -16,7 +16,8 @@ public class JwtExample {
     public static void main(String[] args) {
 //        시크릿키 생성
 //        방법 1
-        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+//        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        SecretKey secretKey = Jwts.SIG.HS256.key().build();
         System.out.println("랜덤 시크릿 키:: " +secretKey);
 
 //        방법 2 - 내가 정해준 문자열을 바탕으로 생성함.  (문자열이 같으면 같은 시크릿키를 얻어옴.)

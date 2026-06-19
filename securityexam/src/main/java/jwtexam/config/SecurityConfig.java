@@ -1,5 +1,6 @@
 package jwtexam.config;
 
+import jwtexam.jwt.exception.CustomAuthenticationEntryPoint;
 import jwtexam.jwt.filter.JwtAuthenticationFilter;
 import jwtexam.jwt.util.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 public class SecurityConfig {
     private final JwtTokenizer jwtTokenizer;
     private final CorsConfigurationSource corsConfigurationSource;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
@@ -38,6 +40,9 @@ public class SecurityConfig {
                 )
                 .cors(cors->cors
                         .configurationSource(corsConfigurationSource)
+                )
+                .exceptionHandling(exception->exception
+                        .authenticationEntryPoint(authenticationEntryPoint)
                 );
 
 

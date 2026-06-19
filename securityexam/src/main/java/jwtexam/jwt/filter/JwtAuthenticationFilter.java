@@ -1,11 +1,15 @@
 package jwtexam.jwt.filter;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jwtexam.jwt.exception.JwtExceptionCode;
 import jwtexam.jwt.token.JwtAuthenticationToken;
 import jwtexam.jwt.util.JwtTokenizer;
 import jwtexam.security.CustomUserDetails;
@@ -42,6 +46,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if(StringUtils.hasText(token)){
             try{
                 getAuthentication(token);
+            }catch (ExpiredJwtException e){
+                request.setAttribute("exception", JwtExceptionCode.EXPIRED_TOKEN.getCode());
+                log.error("Expried Token : {} ", token,e);
+                throw  new BadCredentialsException("Expired token exception",e);
+            }catch (UnsupportedJwtException e){
+                request.setAttribute("exception", JwtExceptionCode.UNSUPPORTED_TOKEN.getCode());
+                log.error("Unsupported Token: {}", token, e);
+                throw new BadCredentialsException("Unsupported token exception", e);
+            } catch (MalformedJwtException e) {
+                request.setAttribute("exception", JwtExceptionCode.INVALID_TOKEN.getCode());
+                log.error("Invalid Token: {}", token, e);
+                throw new BadCredentialsException("Invalid token exception", e);
+            } catch (IllegalArgumentException e) {
+                request.setAttribute("exception", JwtExceptionCode.NOT_FOUND_TOKEN.getCode());
+                log.error("Token not found: {}", token, e);
+                throw new BadCredentialsException("Token not found exception", e);
             }catch (Exception e){
                 log.error("JWT Filter - Internal Error : {}", token,e);
                 throw new BadCredentialsException("JWT Filter internal exception ",e);

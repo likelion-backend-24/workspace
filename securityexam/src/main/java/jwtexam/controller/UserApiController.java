@@ -13,6 +13,7 @@ import jwtexam.service.RefreshTokenService;
 import jwtexam.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -89,6 +90,33 @@ public class UserApiController {
 
         return ResponseEntity.ok(responeDto);
     }
+
+
+    @PostMapping("/refreshToken")
+    public ResponseEntity<?> refreshToken(HttpRequest request,HttpServletResponse response){
+//        1. 쿠키에서 리프레시 토큰을 추출
+
+//        2. 토큰이 없다면??  오류 발생 (400)
+
+
+//        3. 토큰을 검증 및 파싱  - 맞지않다면 적절하게 예외처ㅣ
+
+//        4. 우리 서버에 저장된 리프레시토큰과 사용자가 가져온 리프레시토큰이 일치할때만!! 액세스토큰 재발급!! - 없다면,같지않다면. 적절하게 오류처리
+
+//        5. 사용자 정보 추출
+
+
+//        6. 새로운 액세스토큰 생성
+
+//        7. 새로 생성된 액세스토큰을 쿠키에 넣거나,
+
+//        8.응답으로 보냄..
+
+
+
+        return null;
+    }
+
 
     private void addTokenCookie(String cookieName, String cookieValue, Long expireCount, HttpServletResponse response){
         Cookie cookie = new Cookie(cookieName,cookieValue);

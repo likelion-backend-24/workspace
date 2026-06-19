@@ -47,6 +47,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw new BadCredentialsException("JWT Filter internal exception ",e);
             }
         }
+
+
+        //중요해요!!!
+        filterChain.doFilter(request,response);
+
+
     }
     private void getAuthentication(String token){
         Claims claims = jwtTokenizer.parseAccessToken(token);
@@ -68,7 +74,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         Authentication authentication = new JwtAuthenticationToken(authorities, customUserDetails, null);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
 
 
     }

@@ -1,6 +1,8 @@
 package jwtexam.controller;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jwtexam.domain.RefreshToken;
@@ -56,6 +58,7 @@ public class UserApiController {
             // user가 존재하지 않거나,  비밀번호가 일치하지 않는다면 401 반환!!
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디나 비밀번호가 올바르지 않습니다.");
         }
+//상태유지를 위한 부분!!!
 
         //3. 토큰 발급
         //3-1. 토큰 발급을 위해 Role 정보 추출
@@ -75,7 +78,7 @@ public class UserApiController {
         refreshTokenService.addRefreshToken(refreshTokenEntity);
 
 //        토큰을 쿠키에 구워보내든지, 응답에 실어 보내든지..
-        addTokenCookie("acessToken", accessToken, jwtTokenizer.getAccessTokenExpireCount(), response);
+        addTokenCookie("accessToken", accessToken, jwtTokenizer.getAccessTokenExpireCount(), response);
         addTokenCookie("refreshToken", refreshToken, jwtTokenizer.getRefreshTokenExpireCount(), response);
 
         //응답에 accessToken, refreshToken, userId, userName
@@ -93,30 +96,50 @@ public class UserApiController {
 
 
     @PostMapping("/refreshToken")
-    public ResponseEntity<?> refreshToken(HttpRequest request,HttpServletResponse response){
+    public ResponseEntity<?> refreshToken(HttpServletRequest request,HttpServletResponse response){
 //        1. 쿠키에서 리프레시 토큰을 추출
+        String token = getRefreshToken(request);
 
 //        2. 토큰이 없다면??  오류 발생 (400)
+        if(token == null){
+            return ResponseEntity.badRequest().body("리프레시토큰이 없어요.");
+        }
 
+        try {
 
-//        3. 토큰을 검증 및 파싱  - 맞지않다면 적절하게 예외처ㅣ
-
+//        3. 토큰을 검증 및 파싱  - 맞지않다면 적절하게 예외처리
+            Claims claims = jwtTokenizer.parseRefreshToken(token);
 //        4. 우리 서버에 저장된 리프레시토큰과 사용자가 가져온 리프레시토큰이 일치할때만!! 액세스토큰 재발급!! - 없다면,같지않다면. 적절하게 오류처리
-
+            
 //        5. 사용자 정보 추출
 
 
-//        6. 새로운 액세스토큰 생성
+//        6. 새로운 액세스토큰 생성  (액세스토큰을 갱신하는 것!!  )
 
 //        7. 새로 생성된 액세스토큰을 쿠키에 넣거나,
 
 //        8.응답으로 보냄..
 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
 
         return null;
     }
 
+    //refreshToken 쿠키에서 토큰을 추출하는 메서드
+    private String getRefreshToken(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie:cookies){
+                if("refreshToken".equals(cookie.getName())){
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
 
     private void addTokenCookie(String cookieName, String cookieValue, Long expireCount, HttpServletResponse response){
         Cookie cookie = new Cookie(cookieName,cookieValue);

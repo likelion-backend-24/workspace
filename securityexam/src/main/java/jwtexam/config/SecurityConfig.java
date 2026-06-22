@@ -41,9 +41,9 @@ public class SecurityConfig {
                 .cors(cors->cors
                         .configurationSource(corsConfigurationSource)
                 )
-                .exceptionHandling(exception->exception
+                /*.exceptionHandling(exception->exception
                         .authenticationEntryPoint(authenticationEntryPoint)
-                );
+                )*/;
 
 
         return http.build();

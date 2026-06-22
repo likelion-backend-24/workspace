@@ -1,6 +1,8 @@
 package jwtexam.controller;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SignatureException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -110,22 +113,48 @@ public class UserApiController {
 //        3. 토큰을 검증 및 파싱  - 맞지않다면 적절하게 예외처리
             Claims claims = jwtTokenizer.parseRefreshToken(token);
 //        4. 우리 서버에 저장된 리프레시토큰과 사용자가 가져온 리프레시토큰이 일치할때만!! 액세스토큰 재발급!! - 없다면,같지않다면. 적절하게 오류처리
-            
-//        5. 사용자 정보 추출
+            RefreshToken dbToken = refreshTokenService.findRefreshToken(token).orElse(null);
+            if(dbToken == null || !token.equals(dbToken.getToken())){
+                log.warn("사용자가 보낸 리프레시토큰이 DB 에 저장된 토큰과 다릅니다.");
 
+//               이때 DB에서 토큰을 삭제한다든지..  각 서비스별로 정한 정책에 따라서 해야할 일이 있다면 구현!!
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("리프레시 토큰이 이상해요.");
+            }
+//        5. 사용자 정보 추출
+            Long userId = claims.get("userId", Long.class);
+            User user = userService.getUser(userId).orElseThrow(() -> new IllegalArgumentException("사용자를 찾지 못했습니다."));
 
 //        6. 새로운 액세스토큰 생성  (액세스토큰을 갱신하는 것!!  )
+            List<String> roles = claims.get("roles", List.class);
+            String accessToken = jwtTokenizer.createAccessToken(userId, user.getEmail(), user.getName(), user.getUsername(), roles);
 
 //        7. 새로 생성된 액세스토큰을 쿠키에 넣거나,
+            addTokenCookie("accessToken",accessToken,jwtTokenizer.getAccessTokenExpireCount(),response);
 
 //        8.응답으로 보냄..
+            UserLoginResponeDto responeDto = UserLoginResponeDto.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(token)
+                    .name(user.getName())
+                    .userId(user.getId())
+                    .build();
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.ok(responeDto);
+        }catch (MalformedJwtException | IllegalArgumentException e){
+            //잘못된 토큰 처리!!
+            log.error("Invalid refresh Token : {}",e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh Token");
+        }catch (ExpiredJwtException e){
+            //만료된 토큰이라면?
+            log.warn("Expried refresh Token : {}",e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("토큰이 만료됨.");
+        }
+        catch (Exception e) {
+            //기타오류
+            log.error("refresh token error : {}", e.getMessage());
+            return ResponseEntity.internalServerError().body("Internal server error");
         }
 
-
-        return null;
     }
 
     //refreshToken 쿠키에서 토큰을 추출하는 메서드

@@ -16,6 +16,19 @@ spring:
         format_sql: true
 
 
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23liwMaDyn2RoZiBsC
+            client-secret: 4840cfd4fe82ead950be4ede5464bcdd6cdf7f14
+            scope:
+              - read:user
+              - user:email
+
+
 jwt:
   secretKey: aPQbsKV7CZZDls/cnhW1EjqlGux45LAbBYpBhyk7nAk=
   refreshKey: 123456789010123456789023u454954958495w43434

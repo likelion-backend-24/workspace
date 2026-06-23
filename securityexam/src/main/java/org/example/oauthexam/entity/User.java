@@ -1,8 +1,7 @@
 package org.example.oauthexam.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -11,6 +10,9 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +30,7 @@ public class User {
 
 
 
-// 소셜 로그인을 위해서 컬럼 2개를 추가함.  어떤 provider를 이용해서 로그인했고,  아이디는 무엇인지 저장.       
+// 소셜 로그인을 위해서 컬럼 2개를 추가함.  어떤 provider를 이용해서 로그인했고,  아이디는 무엇인지 저장.
     @Column(name="social_id")
     private String socialId;
     private String provider; //github, google,
@@ -55,4 +57,11 @@ public class User {
 //        user.setRoles(roles);
 //        return user;
 //    }
+
+    @PrePersist
+    public void prePersist(){
+        if(this.registrationDate == null){
+            this.registrationDate = LocalDateTime.now();
+        }
+    }
 }

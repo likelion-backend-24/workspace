@@ -75,7 +75,7 @@ public class SecurityConfig {
             String socialId = String.valueOf(oAuth2User.getAttributes().get("id"));
             String username = String.valueOf(oAuth2User.getAttributes().get("login"));
             String email = String.valueOf(oAuth2User.getAttributes().get("email"));
-            String avatarUrl = String.valueOf(oAuth2User.getAttributes().get("avatarUrl"));
+            String avatarUrl = String.valueOf(oAuth2User.getAttributes().get("avatar_url"));
 
             socialUserService.saveOrUpdateUser(socialId,provider,username,email,avatarUrl);
 

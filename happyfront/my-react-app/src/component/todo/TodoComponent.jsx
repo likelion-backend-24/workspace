@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import TodoList from "./TodoList";
 import TodoInput from "./TodoInput";
 
@@ -23,11 +23,11 @@ const TodoComponent = () => {
     );
   };
 
-  let idGen = 5;
+  const idGen = useRef(5);
 
   const handleAdd = (text) => {
     console.log("id::::::::" + idGen);
-    setTodos([...todos, { id: idGen++, text, completed: false }]);
+    setTodos([...todos, { id: idGen.current++, text, completed: false }]);
   };
 
   return (

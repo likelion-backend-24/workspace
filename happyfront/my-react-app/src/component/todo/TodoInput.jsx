@@ -9,6 +9,12 @@ const TodoInput = ({ onAdd }) => {
       setText("");
     }
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
   return (
     <div>
       <input
@@ -16,6 +22,7 @@ const TodoInput = ({ onAdd }) => {
         value={text}
         placeholder="할 일을 입력하세요."
         onChange={(e) => setText(e.target.value)}
+        onKeyDown={handleKeyDown}
       ></input>
 
       <button onClick={handleSubmit}>할일 추가</button>

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import TodoList from "./TodoList";
+import TodoInput from "./TodoInput";
 
 const TodoComponent = () => {
+  console.log("❤️");
   const [todos, setTodos] = useState([
     { id: 1, text: "리엑트 공부하기", completed: true },
     { id: 2, text: "쉬기", completed: true },
@@ -21,9 +23,17 @@ const TodoComponent = () => {
     );
   };
 
+  let idGen = 5;
+
+  const handleAdd = (text) => {
+    console.log("id::::::::" + idGen);
+    setTodos([...todos, { id: idGen++, text, completed: false }]);
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>할 일 목록</h1>
+      <TodoInput onAdd={handleAdd} />
       <TodoList todos={todos} onDelete={handleDelete} onToggle={handleToggle} />
     </div>
   );

@@ -8,6 +8,7 @@ const UseRefExam02 = () => {
   };
   return (
     <div>
+      <h2>useRef로 DOM 찾기</h2>
       <input type="text" placeholder="이름을 입력하세요." ref={inputRef} />
       <button onClick={clickHandler}>입력</button>
     </div>

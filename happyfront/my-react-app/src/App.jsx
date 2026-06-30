@@ -1,6 +1,9 @@
 import ChildrenExam from "./component/exam/ChildrenExam";
 import Counter from "./component/exam/Counter";
+import FruitList from "./component/exam/FruitList";
+import LoginStatus from "./component/exam/LoginStatus";
 import ParentComponent from "./component/exam/ParentComponent";
+import TodoComponent from "./component/todo/TodoComponent";
 import TextInput from "./component/useState/TextInput";
 import Time from "./component/useState/Time";
 import UseStateExam01 from "./component/useState/UseStateExam01";
@@ -25,7 +28,10 @@ function App() {
       {/* <TextInput /> */}
       {/* <UseStateExam02 /> */}
       {/* <ParentComponent /> */}
-      <Counter />
+      {/* <Counter />
+      <LoginStatus hasNewMessage={false} messageCount={3} />
+      <FruitList /> */}
+      <TodoComponent />
     </div>
   );
 }

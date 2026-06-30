@@ -53,6 +53,10 @@ function Counter() {
       <p style={{ fontSize: "2em", margin: "10px" }}>{count}</p>
       <p>{message}</p>
 
+      {count > 0 && <p style={{ color: "blue" }}>양수입니다!</p>}
+      {count < 0 && <p style={{ color: "red" }}>음수입니다!</p>}
+      {count === 0 && <p style={{ color: "gray" }}>0입니다.</p>}
+
       <Button value="증가" onButtonClick={increment} />
       <Button value="감소" onButtonClick={decrement} disabled={count === 0} />
       <Button value="랜덤 보너스" onButtonClick={addRandomBonus} />

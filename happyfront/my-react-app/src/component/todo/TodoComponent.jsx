@@ -58,7 +58,6 @@ const TodoComponent = () => {
       if (!response.ok) {
         throw new Error("수정 실패");
       }
-
       const updatedTodo = await response.json();
 
       // 화면 업데이트

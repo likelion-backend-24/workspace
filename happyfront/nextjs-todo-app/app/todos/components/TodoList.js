@@ -1,12 +1,15 @@
-const TodoList = ({ todos }) => {
+// 서버 컴포넌트
+import TodoItem from "./TodoItem";
+import styles from "../todos.module.css";
+
+function TodoList({ todos }) {
   return (
-    <>
-      <ul>
-        <li>할일1</li>
-        <li>할일2</li>
-      </ul>
-    </>
+    <ul className={styles.list}>
+      {todos.map((todo) => (
+        <TodoItem key={todo.id} todo={todo} />
+      ))}
+    </ul>
   );
-};
+}
 
 export default TodoList;

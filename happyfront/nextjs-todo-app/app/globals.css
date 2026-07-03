@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* 다크 모드를 'class' 기준으로 동작하게 하는 설정 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

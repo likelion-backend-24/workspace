@@ -3,11 +3,14 @@ package org.example.todoapp.controller;
 
 import org.example.todoapp.entity.Todo;
 import org.example.todoapp.service.TodoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/todos")
@@ -17,6 +20,14 @@ public class TodoController {
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
+    }
+    Logger log = LoggerFactory.getLogger("TodoController");
+
+    @GetMapping("/hello")
+    public String hello(){
+        log.info("hello~~ info");
+        log.debug("hello~~  debug");
+        return "hello";
     }
 
     @GetMapping

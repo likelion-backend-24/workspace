@@ -1,0 +1,9 @@
+services:
+  amazonlinux-ssh:
+    build: .
+    container_name: amazonlinux-ssh
+    ports:
+      - "2222:22"
+    volumes:
+      - "./data:/workspace"
+    restart: always

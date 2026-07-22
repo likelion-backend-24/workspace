@@ -1,0 +1,9 @@
+services:
+  amazonlinux:
+    image: amazonlinux:2023
+    container_name: amazonlinux-compose
+    # 컨테이너 실행 시 bash 쉘 사용
+    command: /bin/bash
+    # 아래 두 설정을 통해 대화형 세션(-it) 효과를 냄
+    tty: true
+    stdin_open: true

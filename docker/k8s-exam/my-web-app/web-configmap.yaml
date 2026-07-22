@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+data:
+  # API_URL: "http://localhost:30081" # 개발 환경
+  API_URL: "http://spring-service:8080" # 운영 환경 (클러스터 내부)
